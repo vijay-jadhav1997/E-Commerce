@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'assets/css/signup.css'%}">
+{% endblock style %}
+
+{% block title %}Sign up{% endblock title %}
+
+{% block signin %}
+  <div class="overlay">
+    <div class="form-container">
+      {% for message in messages %}
+        <p class="{{message.tags}}">{{message}}</p>
+      {% endfor %}
+      <h2>: Create Your Account :</h2>
+      <form action="{% url "signup" %}" method="POST">
+        {% csrf_token %}
+        {{form.non_field_errors}}
+
+        {% for field in form %}
+          <div class="input-box">
+            {{field.label_tag}}
+            {{field}}
+          </div>
+        {% endfor %}
+
+        <input type="submit" value="Sign Up">
+        <p>Already have an account please <a href="{% url 'login' %}">click here</a>!</p>
+      </form>
+    </div>
+  </div>
+{% endblock signin %}

@@ -1,0 +1,39 @@
+.overlay {
+  width: 100dvw;
+  height: 100dvh;
+  background-color: #7b7da45e;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.form-container {
+  max-width: 600px;
+  padding: 1rem;
+  background-color: #fff;
+  color: #111;
+  border-radius: 10px;
+}
+
+
+.input-box {
+  margin: 1rem 0;
+}
+
+
+.input-box label {
+  margin-inline: 1rem;
+}
+
+
+input[type='submit'] {
+  display: inline-block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+}
+
+
