@@ -17,8 +17,8 @@ def signup_view(request):
       messages.success(request, 'Your account has been created! Please verify your email.')
       return redirect('login')
     else:
+      messages.error(request, 'There was an error with your signup details. Please correct the errors below.')
       return render(request, 'indic_auth/signup.html', context={'form': form})
-
   else:
     form = UserSignUpForm()
   return render(request, 'indic_auth/signup.html', context={'form': form})
