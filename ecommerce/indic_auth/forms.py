@@ -14,4 +14,9 @@ class UserSignUpForm(UserCreationForm):
 #   class Meta:
 #     model = User
 #     fields = ['username', 'password1']
-#     fields = "__all__"
+#     # fields = "__all__"
+#     widgets= {
+
+#     }
+    
+

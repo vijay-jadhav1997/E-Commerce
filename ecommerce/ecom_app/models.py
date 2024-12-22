@@ -17,8 +17,15 @@ class Product(models.Model):
   subcategory= models.CharField(max_length=50, default="")
   price= models.IntegerField(default=0)
   descreption= models.TextField(max_length=300, default="")
-  image =  models.ImageField(upload_to='shop/images', default="")
+  image =  models.ImageField(upload_to='images/')
 
   def __str__(self) -> str:
     return self.product_name
 
+
+
+class Student(models.Model):
+  name=models.CharField(max_length=50)
+  age=models.PositiveIntegerField()
+  email=models.EmailField(max_length=100)
+  

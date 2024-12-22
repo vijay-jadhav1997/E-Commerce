@@ -1,0 +1,33 @@
+{% load static %}
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+    <p class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="{% static 'assets/img/logo.png' %}" alt=""> 
+      <span class="sitename">Indic Products</span>
+    </p>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="#product">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+          <li class="dropdown"><a href="{% url 'signup' %}" ><span>SignIn</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{% url 'signup' %}">Sign Up</a></li>
+              <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+          </li>
+        {% endif %}
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+  </div>
+</header>

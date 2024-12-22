@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -34,37 +34,7 @@
 <body class="index-page">
 
   {% block header %}
-    <header id="header" class="header d-flex align-items-center fixed-top">
-      <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-        <p class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <img src="{% static 'assets/img/logo.png' %}" alt=""> 
-          <span class="sitename">Indic Products</span>
-        </p>
-
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="#contact">Contact</a></li>
-            {% if user.is_authenticated %}
-              <li><a href="{% url 'logout' %}">Logout</a></li>
-            {% else %}
-              <li class="dropdown"><a href="{% url 'signup' %}" ><span>SignIn</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                  <li><a href="{% url 'login' %}">Login</a></li>
-                </ul>
-              </li>
-            {% endif %}
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-
-      </div>
-    </header>
+    {% include "header.html" %}
   {% endblock header %}
 
   {% block body %}
@@ -83,39 +53,363 @@
             <div class="col-lg-8">
               <h2>Welcome to Indic Products</h2>
               <p>The perfect place for your shopping.</p>
-              <a href="#about" class="btn-get-started">Get Started</a>
+              <a href="#product" class="btn-get-started">Get Started</a>
             </div>
           </div>
         </div>
 
       </section><!-- /Hero Section -->
       
-      <!-- Contact Section -->
-      <section id="contact" class="contact section dark-background">
+      <!-- Product Section -->
+      <section id="product" class="product section">
+        <h2 class="my-4 text-center text-alert">Check our Products </h2>
+        {% for product, range, nSlides in products  %}
+          <h3 class="my-3 text-center text-success bg-light">{{product.0.category}} Flashsale</h3>
 
-        <div class="form-container">
-        {% for message in messages %}
-          <p class="{{message.tags}}">{{message}}</p>
-        {% endfor %}
-        <h2>: Contact Us :</h2>
-        <form action="{% url "home" %}" method="POST">
-          {% csrf_token %}
-          {{form.non_field_errors}}
-
-          {% for field in form %}
-            <div class="input-box">
-              {{field.label_tag}}
-              {{field}}
+          <div class="container">
+            <div class="row">
+              {% for i in product %}
+                <div class="col-md-3 mt-3">
+                  <img src="/media/{{i.image}}" class="card-img-top" alt="{{i.image}}" height="200px" width="150px" />
+                  <div class="card-body">
+                    <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                    <p class="card-text">{{i.description|slice:"0:50"}}...</p>
+                    <h6 class="card-title">
+                      Price: <span id="pricepr{{i.id}}">{{i.price}}</span>
+                    </h6>
+                    <span id="divpr{{i.id}}" class="divpr">
+                      <button id="pr{{i.id}}" class="btn btn-danger cart btn-sm mt-0">AddToCart</button>
+                      <a href="/media/{{i.image}}">
+                        <button class="btn btn-dark cart btn-sm">View</button>
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              {% endfor %}
             </div>
-          {% endfor %}
-
-          <input type="submit" value="Submit">
-        </form>
-      </div>
-
+          </div>
+        {% endfor %}
       </section><!-- /Contact Section -->
 
+      <!-- About Section -->
+      <section id="about" class="about section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>About</h2>
+          <p><span>Know More</span> <span class="description-title">About Us<br></span></p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+          <div class="row gy-5">
+
+            <div class="content col-xl-5 d-flex flex-column" data-aos="fade-up" data-aos-delay="100">
+              <h4>Welcome to Indic Products App, your one-stop platform for buying and selling authentic and quality products!</h4>
+              <p>
+                Our mission is to empower individuals, artisans, and small businesses across India to showcase their unique products to a wider audience. Whether you're a seller with handcrafted goods, traditional attire, or modern gadgets, or a buyer looking for quality products with an Indian essence, Indic Products App bridges the gap between buyers and sellers effortlessly.
+              </p>
+              <p class="about-btn align-self-center align-self-xl-start"><span>Why Choose Us?</span> </p>
+            </div>
+
+            <div class="col-xl-7" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+
+                <div class="col-md-6 icon-box position-relative">
+                  <i class="bi bi-briefcase"></i>
+                  <h4><span class="stretched-link">Seamless Account Creation</span></h4>
+                  <p>Easily create an account and start buying or selling products within minutes.</p>
+                </div><!-- Icon-Box -->
+
+                <div class="col-md-6 icon-box position-relative">
+                  <i class="bi bi-gem"></i>
+                  <h4><span class="stretched-link">Wide Range and Quality Products</span></h4>
+                  <p>Explore a variety of categories, from local crafts to everyday essentials with ensuring the quality of products.</p>
+                </div><!-- Icon-Box -->
+
+                <div class="col-md-6 icon-box position-relative">
+                  <i class="bi bi-broadcast"></i>
+                  <h4><span class="stretched-link">Secure Transactions</span></h4>
+                  <p>Experience safe and reliable payment methods for both buyers and sellers.</p>
+                </div><!-- Icon-Box -->
+
+                <div class="col-md-6 icon-box position-relative">
+                  <i class="bi bi-easel"></i>
+                  <h4><span class="stretched-link">Community-Centric Approach</span></h4>
+                  <p>Support local businesses and contribute to the growth of India's economy.</p>
+                </div><!-- Icon-Box -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section><!-- /About Section -->
+
+        <!-- Services Section -->
+      {% comment %} <section id="services" class="services section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Services</h2>
+          <p>Check Our <span class="description-title">Services</span></p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+          <div class="row gy-4">
+
+            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+              <div class="service-item position-relative">
+                <div class="icon"><i class="bi bi-activity icon"></i></div>
+                <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
+                <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              </div>
+            </div><!-- End Service Item -->
+
+            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+              <div class="service-item position-relative">
+                <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
+                <h4><a href="" class="stretched-link">Sed ut perspici</a></h4>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              </div>
+            </div><!-- End Service Item -->
+
+            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+              <div class="service-item position-relative">
+                <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
+                <h4><a href="" class="stretched-link">Magni Dolores</a></h4>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+              </div>
+            </div><!-- End Service Item -->
+
+            <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+              <div class="service-item position-relative">
+                <div class="icon"><i class="bi bi-broadcast icon"></i></div>
+                <h4><a href="" class="stretched-link">Nemo Enim</a></h4>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+              </div>
+            </div><!-- End Service Item -->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Services Section --> {% endcomment %}
+        
+      {% comment %} <!-- Contact Section -->
+      <section id="contact" class="contact section dark-background">
+        <div class="form-container">
+          {% for message in messages %}
+            <p class="{{message.tags}}">{{message}}</p>
+          {% endfor %}
+          <h2>: Contact Us :</h2>
+          <form action="{% url "home" %}" method="POST">
+            {% csrf_token %}
+            {{form.non_field_errors}}
+
+            {% for field in form %}
+              <div class="input-box">
+                {{field.label_tag}}
+                {{field}}
+              </div>
+            {% endfor %}
+
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+      </section><!-- /Contact Section --> {% endcomment %}
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p><span>Need Help?</span> <span class="description-title">Contact us<br></span></p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="mb-4" data-aos="fade-up" data-aos-delay="200">
+            <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div><!-- End Google Maps -->
+
+          <div class="row gy-4">
+
+            <div class="col-lg-4">
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Address</h3>
+                  <p>A108 Chhatrapati Shivaji Maharaj Road, Mumbai, MH - 430521, Bharat (India).</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Call Us</h3>
+                  <p> +91 7380 452 255</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email Us</h3>
+                  <p>info@indic.products.com</p>
+                </div>
+              </div><!-- End Info Item -->
+
+            </div>
+
+            <div class="col-md-6">
+              {% for message in messages %}
+                <p class="{{message.tags}}">{{message}}</p>
+              {% endfor %}
+              {% comment %} <form action="{% url "home" %}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                <div class="row gy-4">
+                  {% csrf_token %}
+                  <div class="col-md-6">
+                    {{form.non_field_errors}}
+                  </div>
+
+                  {% for field in form %}
+                    <div class="col-md-12">
+                      {{field.label_tag}}
+                      {{field}}
+                    </div>
+                  {% endfor %}
+                  
+                  <div class="col-md-6">
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                  </div>
+
+                  <div class="col-md-6 ">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                  </div>
+
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  </div>
+
+                  <div class="col-md-12">
+                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  </div>
+
+                  <div class="col-md-12 text-center">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                  </div>
+                  
+                </div>
+                <input type="submit" value+"Send Message"/>
+              </form> {% endcomment %}
+
+              <form action="{% url "home" %}" method="POST">
+                {% csrf_token %}
+                {{form.non_field_errors}}
+
+                {% for field in form %}
+                  <div class="input-box" style="margin: 0.5rem 0;">
+                    {% comment %} {{field.label_tag}} {% endcomment %}
+                    {{field}}
+                  </div>
+                {% endfor %}
+
+                <input type="submit" value="Submit">
+              </form>
+              
+            </div><!-- End Contact Form -->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Contact Section -->
+      
+      <!-- Faq Section -->
+      <section id="faq" class="faq section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Frequently Asked Questions (FAQs)</h2>
+          <p><span>General Questions</span> <span class="description-title">About Indic Products</span></p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+          <div class="row justify-content-center">
+
+            <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+              <div class="faq-container">
+
+                <div class="faq-item faq-active">
+                  <h3>What is Indic Products App?</h3>
+                  <div class="faq-content">
+                    pIndic Products App is a platform where users can buy and sell various products, ranging from handmade crafts to everyday essentials, by creating their own accounts.
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>How do I create an account?</h3>
+                  <div class="faq-content">
+                    <p>Click on the Sign Up button, fill in your details, and verify your email to start using the platform.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>Is Indic Products App free to use?</h3>
+                  <div class="faq-content">
+                    <p>Yes, creating an account and browsing products is completely free. However, a small commission may apply to sellers for successful transactions.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>How do I place an order?</h3>
+                  <div class="faq-content">
+                    <p>Browse the product categories, select the product you want, add it to your cart, and proceed to checkout.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>What payment methods are available?</h3>
+                  <div class="faq-content">
+                    <p>We support various payment options, including credit/debit cards, UPI, net banking, and digital wallets.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>Is shopping on Indic Products App secure?</h3>
+                  <div class="faq-content">
+                    <p>Absolutely! We use secure payment gateways and ensure data privacy for all users.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+              </div>
+
+            </div><!-- End Faq Column-->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Faq Section -->
+
     </main>
+    
+    
   {% endblock body %}
 
 
@@ -140,14 +434,14 @@
           <div class="col-lg-2 col-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Terms of service</a></li>
+              <li><a href="#hero">Home</a></li>
+              <li><a href="#about">About us</a></li>
+              <li><a href="#contact">Contact Us</a></li>
               <li><a href="#">Privacy policy</a></li>
             </ul>
           </div>
 
-          <div class="col-lg-2 col-6 footer-links">
+          {% comment %} <div class="col-lg-2 col-6 footer-links">
             <h4>Our Services</h4>
             <ul>
               <li><a href="#">Web Design</a></li>
@@ -156,7 +450,7 @@
               <li><a href="#">Marketing</a></li>
               <li><a href="#">Graphic Design</a></li>
             </ul>
-          </div>
+          </div> {% endcomment %}
 
           <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
             <h4>Contact Us</h4>
@@ -177,7 +471,7 @@
           <!-- You can delete the links only if you've purchased the pro version. -->
           <!-- Licensing information: https://bootstrapmade.com/license/ -->
           <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-          Designed by <a href="https://www.linkedin.com/in/vijay-jadhav1997" target="_blank">Vijay Jadhav</a>
+          Developed by <a href="https://www.linkedin.com/in/vijay-jadhav1997" target="_blank">Vijay Jadhav</a>
         </div>
       </div>
 

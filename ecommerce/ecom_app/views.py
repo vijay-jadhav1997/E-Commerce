@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from math import ceil
+
+from .models import Product
 from .forms import ContactForm
 
 # Create your views here.
@@ -15,4 +18,16 @@ def home_view(request):
       return render(request, 'index.html', context={'form':form})
   else:
     form= ContactForm()
-  return render(request, 'index.html', context={'form':form})
+    all_products = []
+    catgories_of_product = Product.objects.values('category', 'id')
+    categories = {item['category'] for item in catgories_of_product}
+
+    for category in categories:
+      products = Product.objects.filter(category=category)
+      n=len(products)
+      nSlides = n // 4 + ceil((n/4) - (n // 4))
+      all_products.append([products, range(1, nSlides), nSlides])
+    print(all_products)
+
+  return render(request, 'index.html', context={'form':form, 'products':all_products})
+
