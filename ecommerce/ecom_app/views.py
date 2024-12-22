@@ -27,7 +27,6 @@ def home_view(request):
       n=len(products)
       nSlides = n // 4 + ceil((n/4) - (n // 4))
       all_products.append([products, range(1, nSlides), nSlides])
-    print(all_products)
 
   return render(request, 'index.html', context={'form':form, 'products':all_products})
 
