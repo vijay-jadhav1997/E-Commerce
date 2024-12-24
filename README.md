@@ -1,5 +1,5 @@
 # 🧘🏻‍♂️⚡ Indic Products App 💡💯
-### 🌐visit Indic Products App => [Indic Products App](https://indic-products.vercel.app/)
+### 🌐visit Indic Products App => [Indic Products App](https://vijayjadhav1997.pythonanywhere.com/)
 
 Welcome to **Indic Products**, a Django-based e-commerce platform where users can create accounts to buy and sell various products. The platform supports seamless product listings, secure transactions, and personalized experiences for both buyers and sellers.
 
@@ -46,7 +46,6 @@ Welcome to **Indic Products**, a Django-based e-commerce platform where users ca
     ```
   3. **Install Dependencies:**
     ```sh
-    cd ecommerce
     pip install -r requirements.txt
     ```
   4. **Configure Environment Variable:**
@@ -54,7 +53,7 @@ Welcome to **Indic Products**, a Django-based e-commerce platform where users ca
     ```sh
     SECRET_KEY=your_secret_key
     DEBUG=True
-    DATABASE_URL=postgres://user:password@localhost:5432/indic_products
+    ALLOWED_HOSTS=127.0.0.1
     ```
   5. **Applying Migrations:**
     ```sh
@@ -86,3 +85,4 @@ Contributions are always welcome! If you have suggestions or improvements, feel 
 If you have any questions or feedback, feel free to reach out at 
 - [vijay-jadhav1997](https://www.linkedin.com/in/vijay-jadhav1997).
 - Email: vijay05111997@gmail.com
+
