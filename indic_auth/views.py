@@ -10,15 +10,18 @@ from .forms import UserSignUpForm
 def signup_view(request):
   if request.method == 'POST':
     form = UserSignUpForm(request.POST)
-    if form.is_valid:
-      user = form.save(commit=False)
+    if form.is_valid():
+      # user = form.save(commit=False)
+      form.save()
       # user.is_active = False
-      user.save()
-      messages.success(request, 'Your account has been created! Please verify your email.')
+      # user.set_password(form.cleaned_data["password"])
+      # user.save()
+      messages.success(request, 'Your account has been created successfully!')
+      # messages.success(request, 'Your account has been created! Please verify your email.')
       return redirect('login')
     else:
-      messages.error(request, 'There was an error with your signup details. Please correct the errors below.')
-      return render(request, 'indic_auth/signup.html', context={'form': form})
+      messages.error(request, 'There was an error with your signup details. Please correct the below errors.')
+      # return render(request, 'indic_auth/signup.html', context={'form': form})
   else:
     form = UserSignUpForm()
   return render(request, 'indic_auth/signup.html', context={'form': form})

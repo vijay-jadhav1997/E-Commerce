@@ -16,14 +16,24 @@
     <h2>: Login to Your Account :</h2>
     <form action="{% url "login" %}" method="POST">
       {% csrf_token %}
-      {{form.non_field_errors}}
-      
-      {% for field in form %}
-        <div class="input-box">
-          {{field.label_tag}}
-          {{field}}
-        </div>
-      {% endfor %}
+      <ul class='non-field-errors' style='color: red; '>
+          {% for error in form.non_field_errors %}
+            <li>{{error}}</li> 
+          {% endfor %}
+        </ul>
+        
+
+        {% for field in form %}
+          <div class="input-box">
+            {{field.label_tag}}
+            {{field}}
+            <ul class='field-errors' style='color: red; '>
+              {% for error in field.errors %}
+               <li>{{error}}</li> 
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
 
       <input type="submit" value="Login">
       <p>Don't have an account please <a href="{% url 'signup' %}">click here</a>!</p>
